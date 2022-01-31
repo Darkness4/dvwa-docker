@@ -15,7 +15,7 @@ version: '3.9'
 
 services:
   dvwa:
-    image: ghcr.io/darkness4/dvwa-docker:2.0.1
+    image: ghcr.io/darkness4/dvwa-docker:latest
     ports:
       - '3000:80'
     depends_on:
