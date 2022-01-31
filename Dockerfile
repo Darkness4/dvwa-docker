@@ -15,7 +15,7 @@ RUN apt update \
     && git clone -b ${DVWA_VERSION} --depth 1 https://github.com/digininja/DVWA.git /var/www/html \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd mysqli pdo pdo_mysql \
-    && apt install -y zlib1g libpng16-16 libfreetype6 libjpeg62-turbo libpng-tools \
+    && apt install -y zlib1g libpng16-16 libfreetype6 libjpeg62-turbo libpng-tools iputils-ping \
     && apt remove -y git zlib1g-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev \
     && apt autoremove -y \
     && apt clean -y \
