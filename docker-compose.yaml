@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  dvwa:
+    image: darkness4/dvwa
+    pull_policy: never
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:80'
+    depends_on:
+      - database
+    environment:
+      WAIT_HOSTS: database:3306
+      WAIT_HOSTS_TIMEOUT: 300
+      WAIT_SLEEP_INTERVAL: 30
+      WAIT_HOST_CONNECT_TIMEOUT: 30
+    volumes:
+      - ./config:/config
+
+  database:
+    image: library/mariadb:10.7
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: localrootpassword
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: p@ssw0rd
+    volumes:
+      - 'database_data:/var/lib/mysql'
+
+volumes:
+  database_data:
