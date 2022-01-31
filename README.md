@@ -8,26 +8,20 @@ The aim of DVWA is to practice some of the most common web vulnerability, with v
 
 ## Run this image by pulling it
 
-A docker compose:
+Write a `docker-compose.yaml`:
 
-```
+```yaml
 version: '3.9'
 
 services:
   dvwa:
-    image: ghcr.io/darkness4/dvwa:2.0.1
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/darkness4/dvwa-docker:2.0.1
     ports:
       - '3000:80'
     depends_on:
       - database
-    environment:
-      WAIT_HOSTS: database:3306
-      WAIT_HOSTS_TIMEOUT: 300
-      WAIT_SLEEP_INTERVAL: 30
-      WAIT_HOST_CONNECT_TIMEOUT: 30
+    env_file:
+      - .env
     volumes:
       - ./config:/config
 
@@ -35,32 +29,56 @@ services:
     image: library/mariadb:10.7
     ports:
       - '3306:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: localrootpassword
-      MYSQL_DATABASE: dvwa
-      MYSQL_USER: dvwa
-      MYSQL_PASSWORD: p@ssw0rd
+    env_file:
+      - .env
     volumes:
       - 'database_data:/var/lib/mysql'
 
 volumes:
   database_data:
-
 ```
 
-## Run this image by building it
+Create a `config` directory and add a `config.inc.php`. See the [`config/config.inc.php`](./config/config.inc.php) in this repository.
 
-Clone this repository.
+To run this image you need [docker](http://docker.com) and [docker-compose](https://docs.docker.com/compose/cli-command/#install-on-linux) installed. Just run the command:
 
-To run this image you need [docker](http://docker.com) and docker-compose installed. Just run the command:
-
-    docker compose up -d --build
+```sh
+docker compose up -d --build
+```
 
 You can access to the server by going to http://localhost:3000
 
 Then, just click on the `Create / Reset database` button and it will generate any additional configuration needed.
 
 The database may takes time to initialize, so don't be surprised if you received some "connection refused" errors.
+
+You can check the logs using:
+
+```sh
+docker compose logs -f
+```
+
+## Run this image by building it
+
+Clone this repository with git.
+
+To run this image you need [docker](http://docker.com) and [docker-compose](https://docs.docker.com/compose/cli-command/#install-on-linux) installed. Just run the command:
+
+```sh
+docker compose up -d --build
+```
+
+You can access to the server by going to http://localhost:3000
+
+Then, just click on the `Create / Reset database` button and it will generate any additional configuration needed.
+
+The database may takes time to initialize, so don't be surprised if you received some "connection refused" errors.
+
+You can check the logs using:
+
+```sh
+docker compose logs -f
+```
 
 ## Login with default credentials
 

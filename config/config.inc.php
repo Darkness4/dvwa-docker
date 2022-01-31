@@ -15,11 +15,11 @@ $DBMS = 'MySQL';
 # If you are using MariaDB then you cannot use root, you must use create a dedicated DVWA user.
 #   See README.md for more information on this.
 $_DVWA = array();
-$_DVWA[ 'db_server' ]   = 'database';
-$_DVWA[ 'db_database' ] = 'dvwa';
-$_DVWA[ 'db_user' ]     = 'dvwa';
-$_DVWA[ 'db_password' ] = 'p@ssw0rd';
-$_DVWA[ 'db_port'] = '3306';
+$_DVWA[ 'db_server' ]   = getenv('MYSQL_HOST');
+$_DVWA[ 'db_database' ] = getenv('MYSQL_DATABASE');
+$_DVWA[ 'db_user' ]     = getenv('MYSQL_USER');
+$_DVWA[ 'db_password' ] = getenv('MYSQL_PASSWORD');
+$_DVWA[ 'db_port'] = getenv('MYSQL_PORT');
 
 # ReCAPTCHA settings
 #   Used for the 'Insecure CAPTCHA' module
